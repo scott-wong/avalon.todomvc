@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="cn">
+
+<head>
+    <meta charset="utf-8">
+    <title>avalon • TodoMVC</title>
+    <link rel="stylesheet" href="css/base.css">
+    <style>
+    .ms-controller {
+        visibility: hidden;
+    }
+    </style>
+</head>
+
+<body ms-controller="todo" class="ms-controller">
+    <section id="todoapp">
+        <header id="header">
+            <h1>todos</h1>
+            <form id="todo-form" ms-submit="addTodo" autocomplete="off">
+                <input id="new-todo" ms-duplex="newTodo" placeholder="What needs to be done?" autofocus>
+            </form>
+        </header>
+        <section id="main" ms-visible="todos.length">
+            <input id="toggle-all" type="checkbox" ms-duplex-checked="allChecked">
+            <label for="toggle-all">Mark all as complete</label>
+            <ul id="todo-list">
+                <li ms-repeat-todo="todos" ms-class="completed: todo.completed" ms-class-1="editing: $index === editingIndex" ms-visible="showTodo(todo.completed)">
+                    <div class="view">
+                        <input class="toggle" type="checkbox" ms-duplex-checked="todo.completed" data-duplex-changed="checkOne">
+                        <label ms-dblclick="editTodo($index)">{{todo.title}}</label>
+                        <button class="destroy" ms-click="$remove"></button>
+                    </div>
+                    <form action="javascript:void(0)" ms-submit="doneEditing">
+                        <input class="edit" ms-duplex="todo.title" ms-blur="doneEditing">
+                    </form>
+                </li>
+            </ul>
+        </section>
+        <footer id="footer" ms-visible="todos.length">
+            <span id="todo-count">
+                <strong>{{remainingCount}}</strong>
+                item{{remainingCount>1 ? "s" : ""}} left
+            </span>
+            <ul id="filters">
+                <li ms-repeat="status">
+                    <a ms-class="selected: state == el" ms-href="#/{{el}}">{{ el | capitalize }}</a>
+                </li>
+            </ul>
+            <button id="clear-completed" ms-visible="completedCount" ms-click="removeCompleted">
+                Clear completed ({{completedCount}})
+            </button>
+        </footer>
+    </section>
+    <footer id="info">
+        <p>Double-click to edit a todo</p>
+        <p>Created by <a href="https://github.com/RubyLouvre/avalon">司徒正美</a> | Enhanced by <a href="https://github.com/scott-wong">scott-wong</a>
+            <p>Part of <a href="http://todomvc.com">TodoMVC</a>
+            </p>
+    </footer>
+
+    <script src="js/avalon.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
