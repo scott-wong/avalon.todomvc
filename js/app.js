@@ -83,7 +83,7 @@ require(['mmRouter'], function() {
         return (store && JSON.parse(store)) || []
     }
 
-    //路由
+    //router
     avalon.router.get('/:state', function() {
         model.state = this.params.state || 'all'
     })
